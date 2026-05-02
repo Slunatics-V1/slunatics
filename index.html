@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Slunatics_V1</title>
+    <style>
+        body { background: #050505; color: white; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 40px; margin: 0; }
+        .card { background: #111; padding: 25px; border-radius: 20px; border: 1px solid #333; width: 350px; text-align: center; margin-bottom: 20px; }
+        .card img { width: 150px; height: 150px; border-radius: 50%; border: 3px solid #00d4ff; object-fit: cover; }
+        #secret-trigger { color: #00d4ff; letter-spacing: 2px; cursor: pointer; margin-top: 15px; }
+        .playlist-box { width: 100%; max-width: 450px; background: #111; border-radius: 15px; border: 1px solid #222; overflow: hidden; }
+        audio { width: 100%; filter: invert(1); padding: 10px; }
+        #list { list-style: none; padding: 0; margin: 0; max-height: 400px; overflow-y: auto; }
+        #list li { padding: 12px 20px; border-bottom: 1px solid #222; cursor: pointer; color: #ccc; text-align: left; transition: 0.2s; }
+        #list li:hover { background: #1a1a1a; color: #00d4ff; }
+        .active { background: #222; color: #00d4ff !important; font-weight: bold; border-left: 4px solid #00d4ff; }
+        .btn-discord { display: inline-block; margin-top: 10px; background: #5865F2; color: white; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <img src="Image ChatGPT 2 mai 2026, 20_33_09.png" alt="Slunatics">
+        <h1 id="secret-trigger" onclick="unlockAdmin()">Slunatics_V1</h1>
+        <a href="https://discord.gg/TON_LIEN" target="_blank" class="btn-discord">📥 DISCORD</a>
+    </div>
+
+    <div class="playlist-box">
+        <audio id="player" controls></audio>
+        <ul id="list">
+            <li onclick="playMe('BMSmp3', this)">01. BMS</li>
+            <li onclick="playMe('BMW.mp3', this)">02. BMW</li>
+            <li onclick="playMe('Beuh magique.mp3', this)">03. Beuh Magique</li>
+            <li onclick="playMe('Hakayet.mp3', this)">04. Hakayet</li>
+            <li onclick="playMe('Je comprends pas.mp3', this)">05. Je comprends pas</li>
+            <li onclick="playMe('J\'avais dit.mp3', this)">06. J'avais dit</li>
+            <li onclick="playMe('Pocahontas.mp3', this)">07. Pocahontas</li>
+            <li onclick="playMe('Pétunias.mp3', this)">08. Pétunias</li>
+            <li onclick="playMe('RUINART.mp3', this)">09. RUINART</li>
+            <li onclick="playMe('Ryuk.mp3', this)">10. Ryuk</li>
+            <li onclick="playMe('Saka.mp3', this)">11. Saka</li>
+            <li onclick="playMe('Vibe.mp3', this)">12. Vibe</li>
+            <li onclick="playMe('Zoro.mp3', this)">13. Zoro</li>
+        </ul>
+    </div>
+
+    <script>
+        const player = document.getElementById('player');
+        function playMe(url, el) {
+            player.src = url;
+            player.play();
+            document.querySelectorAll('li').forEach(s => s.classList.remove('active'));
+            el.classList.add('active');
+        }
+        function unlockAdmin() {
+            if(prompt("Code :") === "SLU2026") {
+                alert("Mode Admin activé !");
+            }
+        }
+        player.onended = () => {
+            const active = document.querySelector('.active');
+            if (active && active.nextElementSibling) active.nextElementSibling.click();
+        };
+    </script>
+</body>
+</html>
