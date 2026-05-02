@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Slunatics_V1 - Private Station</title>
+    <style>
+        body { 
+            background: #050505; 
+            color: white; 
+            font-family: 'Segoe UI', sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 40px; 
+            margin: 0; 
+        }
+        .card { 
+            background: #111; 
+            padding: 25px; 
+            border-radius: 20px; 
+            border: 1px solid #333; 
+            width: 350px; 
+            text-align: center; 
+            margin-bottom: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .card img { 
+            width: 150px; 
+            height: 150px; 
+            border-radius: 50%; 
+            border: 3px solid #00d4ff; 
+            object-fit: cover; 
+        }
+        
+        /* Titre cliquable pour le secret */
+        #secret-trigger { 
+            color: #00d4ff; 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+            cursor: pointer; 
+            user-select: none;
+            transition: 0.3s;
+        }
+        #secret-trigger:hover { text-shadow: 0 0 10px #00d4ff; }
+        
+        .playlist-box { 
+            width: 100%; 
+            max-width: 450px; 
+            background: #111; 
+            border-radius: 15px; 
+            border: 1px solid #222; 
+            overflow: hidden; 
+        }
+        audio { width: 100%; filter: invert(1); padding: 10px; box-sizing: border-box; }
+        
+        #list { list-style: none; padding: 0; margin: 0; max-height: 400px; overflow-y: auto; }
+        #list li { 
+            padding: 12px 20px; 
+            border-bottom: 1px solid #222; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            font-size: 0.9rem;
+        }
+        #list li:hover { background: #1a1a1a; color: #00d4ff; }
+        .active { background: #222; color: #00d4ff; font-weight: bold; border-left: 4px solid #00d4ff; }
+
+        /* Bouton admin masqué */
+        #admin-btn { 
+            display: none; 
+            margin-top: 15px; 
+            background: linear-gradient(45deg, #00d4ff, #0056b3); 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,212,255,0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <img src="ChatGPT Image 2 mai 2026, 20_33_09.png" alt="Slunatics_V1">
+        <h1 id="secret-trigger" onclick="unlockAdmin()">Slunatics_V1</h1>
+        
+        <input type="file" id="musicInput" multiple accept="audio/*" style="display:none">
+        <button id="admin-btn" onclick="document.getElementById('musicInput').click()">📂 CONFIGURER PLAYLIST</button>
+    </div>
+
+    <div class="playlist-box">
+        <audio id="player" controls></audio>
+        <ul id="list">
+            <li style="color:#444; text-align:center;">Système verrouillé.</li>
+        </ul>
+    </div>
+
+    <script>
+        const pass = "SLU2026";
+        const list = document.getElementById('list');
+        const player = document.getElementById('player');
+
+        function unlockAdmin() {
+            let attempt = prompt("Code d'accès requis :");
+            if(attempt === pass) {
+                document.getElementById('admin-btn').style.display = "inline-block";
+                alert("Accès administrateur déverrouillé.");
+            } else {
+                alert("Code erroné.");
+            }
+        }
+
+        document.getElementById('musicInput').onchange = (e) => {
+            const files = Array.from(e.target.files);
+            if(files.length > 0) {
+                list.innerHTML = "";
+                files.forEach(file => {
+                    const li = document.createElement('li');
+                    li.innerText = file.name.replace(/\.[^/.]+$/, "");
+                    li.onclick = () => {
+                        player.src = URL.createObjectURL(file);
+                        player.play();
+                        document.querySelectorAll('li').forEach(s => s.classList.remove('active'));
+                        li.classList.add('active');
+                    };
+                    list.appendChild(li);
+                });
+            }
+        };
+
+        player.onended = () => {
+            const active = document.querySelector('.active');
+            if (active && active.nextElementSibling) active.nextElementSibling.click();
+        };
+    </script>
+
+</body>
+</html>
