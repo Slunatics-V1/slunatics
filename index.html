@@ -3,71 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <title>Slunatics_V1</title>
-    <!-- On importe Font Awesome pour avoir les icônes Roblox et Spotify facilement -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background: #050505; color: white; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 40px; margin: 0; }
+        body { background: #050505; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 40px; margin: 0; }
         
-        /* Section des liens au-dessus de la PDP */
-        .social-top { margin-bottom: 15px; display: flex; gap: 20px; font-size: 14px; }
-        .social-link { color: #ccc; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
-        .social-link:hover { color: #00d4ff; transform: scale(1.1); }
-        .fa-spotify { color: #1DB954; } /* Vert Spotify */
+        /* Logos au dessus de la PDP */
+        .social-top { margin-bottom: 20px; display: flex; gap: 30px; }
+        .social-link { transition: 0.3s; display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #888; font-size: 12px; font-weight: bold; }
+        .social-link svg { width: 30px; height: 30px; margin-bottom: 5px; }
+        .social-link:hover { transform: scale(1.1); color: #00d4ff; }
+        .social-link:hover svg { fill: #00d4ff; }
 
-        .card { background: #111; padding: 25px; border-radius: 20px; border: 1px solid #333; width: 350px; text-align: center; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .card img { width: 150px; height: 150px; border-radius: 50%; border: 3px solid #00d4ff; object-fit: cover; background: #222; }
+        .card { background: #111; padding: 25px; border-radius: 20px; border: 1px solid #333; width: 350px; text-align: center; margin-bottom: 20px; }
+        .card img { width: 150px; height: 150px; border-radius: 50%; border: 3px solid #00d4ff; object-fit: cover; }
         
         .playlist-box { width: 100%; max-width: 450px; background: #111; border-radius: 15px; border: 1px solid #222; overflow: hidden; }
-        
-        /* Masquer le téléchargement natif */
         audio { width: 100%; filter: invert(1); padding: 10px; }
-        audio::-internal-media-controls-download-button { display:none; }
-        audio::-webkit-media-controls-enclosure { overflow:hidden; }
-        audio::-webkit-media-controls-panel { width: calc(100% + 30px); }
-
-        #list { list-style: none; padding: 0; margin: 0; max-height: 400px; overflow-y: auto; }
-        #list li { padding: 12px 20px; border-bottom: 1px solid #222; cursor: pointer; color: #ccc; text-align: left; transition: 0.2s; }
-        #list li:hover { background: #1a1a1a; color: #00d4ff; }
-        .active { background: #222; color: #00d4ff !important; font-weight: bold; border-left: 4px solid #00d4ff; }
         
-        .btn-discord { display: inline-block; margin-top: 15px; background: #5865F2; color: white; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; transition: 0.3s; }
-        .btn-discord:hover { background: #4752c4; }
+        #list { list-style: none; padding: 0; margin: 0; max-height: 400px; overflow-y: auto; }
+        #list li { padding: 15px 20px; border-bottom: 1px solid #222; cursor: pointer; color: #ccc; text-align: left; }
+        #list li:hover { background: #1a1a1a; color: #00d4ff; }
+        .active { background: #1a1a1a; color: #00d4ff !important; font-weight: bold; border-left: 4px solid #00d4ff; }
+        
+        .btn-discord { display: inline-block; margin-top: 15px; background: #5865F2; color: white; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <!-- Liens Sociaux au-dessus de la carte -->
+    <!-- Liens Sociaux avec Logos SVG (Garanti d'apparaître) -->
     <div class="social-top">
+        <!-- Logo Roblox -->
         <a href="https://www.roblox.com" target="_blank" class="social-link">
-            <i class="fa-solid fa-cube"></i> ROBLOX
+            <svg viewBox="0 0 24 24" fill="#ccc"><path d="M18.8,19.7L5.2,22.7L2.2,9.2L15.8,6.2L18.8,19.7z M8.1,17.6L13.1,16.4L11.9,11.5L7,12.7L8.1,17.6z"/></svg>
+            ROBLOX
         </a>
+        <!-- Logo Spotify -->
         <a href="https://open.spotify.com/user/31g5z4642yxicoslpiq5z5coypem?si=98f60ccdd43d4796" target="_blank" class="social-link">
-            <i class="fa-brands fa-spotify"></i> SPOTIFY
+            <svg viewBox="0 0 24 24" fill="#1DB954"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.5 17.3c-.2.4-.7.5-1.1.3-2.8-1.7-6.4-2.1-10.6-1.1-.4.1-.9-.1-1-.6-.1-.4.1-.9.6-1 4.6-1.1 8.5-.6 11.8 1.4.3.2.4.7.3 1zm1.5-3.3c-.3.5-.9.6-1.4.3-3.2-2-8.1-2.6-11.9-1.4-.6.2-1.2-.2-1.4-.7-.2-.6.2-1.2.7-1.4 4.4-1.3 9.8-.7 13.5 1.6.5.3.6.9.5 1.6zm.1-3.4C15.2 8.3 8.7 8.1 5 9.2c-.7.2-1.4-.2-1.6-.9-.2-.7.2-1.4.9-1.6 4.3-1.3 11.5-1.1 16.1 1.7.6.4.8 1.2.5 1.8-.3.7-1.2.9-1.8.6z"/></svg>
+            SPOTIFY
         </a>
     </div>
 
     <div class="card">
         <img src="logo.png" alt="Logo">
-        <h1 style="color: #00d4ff; margin-top: 15px;">Slunatics_V1</h1>
+        <h1 style="color: #00d4ff;">Slunatics_V1</h1>
         <a href="https://discord.gg/GB2TS9g7pG" target="_blank" class="btn-discord">📥 REJOINDRE LE DISCORD</a>
     </div>
 
     <div class="playlist-box">
-        <audio id="player" controls controlsList="nodownload"></audio>
+        <audio id="player" controls></audio>
         <ul id="list">
-            <li onclick="playMe('1.mp3', this)">01. BMS</li>
-            <li onclick="playMe('2.mp3', this)">02. Beuh Magique</li>
-            <li onclick="playMe('3.mp3', this)">03. BMW</li>
-            <li onclick="playMe('hakayet.mp3', this)">04. Hakayet</li>
-            <li onclick="playMe('jtavaisdit.mp3', this)">05. J'tavais dit</li>
-            <li onclick="playMe('jcomprendspas.mp3', this)">06. J'comprends pas</li>
-            <li onclick="playMe('pocahontas.mp3', this)">07. Pocahontas</li>
-            <li onclick="playMe('petunias.mp3', this)">08. Pétunias</li>
-            <li onclick="playMe('ruinart.mp3', this)">09. Ruinart</li>
-            <li onclick="playMe('ryuk.mp3', this)">10. Ryuk</li>
-            <li onclick="playMe('sdnight.mp3', this)">11. SD Night</li>
-            <li onclick="playMe('tourdumonde.mp3', this)">12. Tour du monde</li>
-            <li onclick="playMe('vanilla.mp3', this)">13. Vanilla</li>
+            <li onclick="playMe('1.mp3', this)">01. 1</li>
+            <li onclick="playMe('2.mp3', this)">02. 2</li>
+            <li onclick="playMe('3.mp3', this)">03. 3</li>
+            <li onclick="playMe('hakayet.mp3', this)">04. hakayet</li>
+            <li onclick="playMe('jtavaisdit.mp3', this)">05. jtavaisdit</li>
+            <li onclick="playMe('jcomprendspas.mp3', this)">06. jcomprendspas</li>
+            <li onclick="playMe('pocahontas.mp3', this)">07. pocahontas</li>
+            <li onclick="playMe('petunias.mp3', this)">08. petunias</li>
+            <li onclick="playMe('ruinart.mp3', this)">09. ruinart</li>
+            <li onclick="playMe('ryuk.mp3', this)">10. ryuk</li>
+            <li onclick="playMe('sdnight.mp3', this)">11. sdnight</li>
+            <li onclick="playMe('tourdumonde.mp3', this)">12. ourdumonde</li>
+            <li onclick="playMe('vanilla.mp3', this)">13. vanilla</li>
         </ul>
     </div>
 
@@ -75,9 +72,14 @@
         const player = document.getElementById('player');
 
         function playMe(file, el) {
-            player.src = "./" + file + "?v=" + Math.random();
-            player.play().catch(err => {
-                console.error("Erreur de lecture : " + file);
+            // Tentative 1 : Chemin direct (le plus rapide)
+            player.src = file + "?v=" + Date.now();
+            
+            player.play().catch(() => {
+                // Tentative 2 : Secours si le premier échoue
+                console.log("Essai du lien de secours...");
+                player.src = "https://raw.githubusercontent.com/Slunatics-V1/slunatics/main/" + file;
+                player.play();
             });
 
             document.querySelectorAll('li').forEach(s => s.classList.remove('active'));
