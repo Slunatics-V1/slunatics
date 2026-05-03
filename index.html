@@ -2,39 +2,84 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Slunatics</title>
+    <title>Slunatics_V1</title>
     <style>
-        body { background: #050505; color: white; font-family: sans-serif; text-align: center; padding: 50px; }
-        .card { background: #111; padding: 20px; border-radius: 15px; border: 1px solid #00d4ff; display: inline-block; }
-        img { width: 150px; height: 150px; border-radius: 50%; margin-bottom: 10px; }
-        li { list-style: none; padding: 10px; background: #222; margin: 5px; cursor: pointer; border-radius: 5px; }
-        li:hover { background: #00d4ff; color: black; }
+        body { background: #050505; color: white; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 40px; margin: 0; }
+        .card { background: #111; padding: 25px; border-radius: 20px; border: 1px solid #333; width: 350px; text-align: center; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .card img { width: 150px; height: 150px; border-radius: 50%; border: 3px solid #00d4ff; object-fit: cover; background: #222; }
+        #secret-trigger { color: #00d4ff; letter-spacing: 2px; cursor: pointer; margin-top: 15px; text-transform: uppercase; }
+        .playlist-box { width: 100%; max-width: 450px; background: #111; border-radius: 15px; border: 1px solid #222; overflow: hidden; }
+        audio { width: 100%; filter: invert(1); padding: 10px; }
+        #list { list-style: none; padding: 0; margin: 0; max-height: 400px; overflow-y: auto; }
+        #list li { padding: 12px 20px; border-bottom: 1px solid #222; cursor: pointer; color: #ccc; text-align: left; transition: 0.2s; }
+        #list li:hover { background: #1a1a1a; color: #00d4ff; }
+        .active { background: #222; color: #00d4ff !important; font-weight: bold; border-left: 4px solid #00d4ff; }
+        .btn-discord { display: inline-block; margin-top: 15px; background: #5865F2; color: white; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; transition: 0.3s; }
+        .btn-discord:hover { background: #4752c4; transform: scale(1.05); }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <!-- Si ton fichier s'appelle logo.png sur GitHub, il s'affichera ici -->
-        <img src="logo.png" alt="Logo Slunatics">
-        <h1>Slunatics_V1</h1>
-        <a href="https://discord.gg/GB2TS9g7pG" style="color:#5865F2; text-decoration:none; font-weight:bold;">REJOINDRE DISCORD</a>
+        <img src="logo.png" alt="Slunatics Logo">
+        <h1 id="secret-trigger" onclick="unlockAdmin()">Slunatics_V1</h1>
+        <a href="https://discord.gg/GB2TS9g7pG" target="_blank" class="btn-discord">📥 REJOINDRE LE DISCORD</a>
     </div>
 
-    <ul style="padding:0; margin-top:20px;">
-        <li onclick="play('1.mp3')">01. BMS (Test 1)</li>
-        <li onclick="play('2.mp3')">02. BMW (Test 2)</li>
-    </ul>
-
-    <audio id="audioPlayer" controls style="margin-top:20px; filter:invert(1);"></audio>
+    <div class="playlist-box">
+        <audio id="player" controls></audio>
+        <ul id="list">
+            <li onclick="playMe('1.mp3', this)">01. BMS</li>
+            <li onclick="playMe('2.mp3', this)">02. BMW</li>
+            <li onclick="playMe('3.mp3', this)">03. Beuh Magique</li>
+            <li onclick="playMe('4.mp3', this)">04. Hakayet</li>
+            <li onclick="playMe('5.mp3', this)">05. Je comprends pas</li>
+            <li onclick="playMe('6.mp3', this)">06. J'avais dit</li>
+            <li onclick="playMe('7.mp3', this)">07. Pocahontas</li>
+            <li onclick="playMe('8.mp3', this)">08. Pétunias</li>
+            <li onclick="playMe('9.mp3', this)">09. RUINART</li>
+            <li onclick="playMe('10.mp3', this)">10. Ryuk</li>
+            <li onclick="playMe('11.mp3', this)">11. Saka</li>
+            <li onclick="playMe('12.mp3', this)">12. Vibe</li>
+            <li onclick="playMe('13.mp3', this)">13. Zoro</li>
+        </ul>
+    </div>
 
     <script>
-        function play(file) {
-            const player = document.getElementById('audioPlayer');
-            // Le secret : on ajoute un chiffre aléatoire à la fin pour forcer GitHub à ne pas utiliser le cache
-            player.src = file + "?v=" + Math.random();
-            player.play();
-        }
-    </script>
+        const player = document.getElementById('player');
 
+        function playMe(file, el) {
+            // On ajoute un paramètre bidon (?t=...) pour forcer le navigateur à télécharger le fichier sans utiliser le cache
+            const timestamp = new Date().getTime();
+            player.src = file + "?t=" + timestamp;
+            
+            player.load();
+            const playPromise = player.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    console.log("Lecture en cours : " + file);
+                }).catch(error => {
+                    console.log("Erreur de lecture. Vérifie que le fichier s'appelle bien " + file);
+                });
+            }
+
+            document.querySelectorAll('li').forEach(s => s.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function unlockAdmin() {
+            if(prompt("Code Administrateur :") === "SLU2026") {
+                alert("Accès Admin validé.");
+            }
+        }
+
+        player.onended = () => {
+            const active = document.querySelector('.active');
+            if (active && active.nextElementSibling) {
+                active.nextElementSibling.click();
+            }
+        };
+    </script>
 </body>
 </html>
