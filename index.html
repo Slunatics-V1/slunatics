@@ -19,8 +19,8 @@
 <body>
 
     <div class="card">
-        <!-- Lien corrigé avec slunatic -->
-        <img src="https://raw.githubusercontent.com/Slunatics-V1/slunatic/main/logo.png" alt="Logo">
+        <!-- Utilisation d'un chemin relatif pour être sûr à 100% -->
+        <img src="logo.png" alt="Logo">
         <h1 style="color: #00d4ff;">Slunatics_V1</h1>
         <a href="https://discord.gg/GB2TS9g7pG" target="_blank" class="btn-discord">📥 REJOINDRE LE DISCORD</a>
     </div>
@@ -28,7 +28,6 @@
     <div class="playlist-box">
         <audio id="player" controls></audio>
         <ul id="list">
-            <!-- Noms exacts de l'image_4e9ba2.png -->
             <li onclick="playMe('1.mp3', this)">01. BMS</li>
             <li onclick="playMe('2.mp3', this)">02. BMW</li>
             <li onclick="playMe('3.mp3', this)">03. Beuh Magique</li>
@@ -47,13 +46,13 @@
 
     <script>
         const player = document.getElementById('player');
-        // L'adresse de base corrigée sans le "que"
-        const baseUrl = "https://raw.githubusercontent.com/Slunatics-V1/slunatic/main/";
 
         function playMe(file, el) {
-            player.src = baseUrl + file;
+            // On enlève l'adresse complète pour laisser GitHub gérer le chemin lui-même
+            player.src = file + "?v=" + Math.random();
+            
             player.play().catch(err => {
-                alert("Erreur sur le fichier : " + file + "\nVérifie qu'il n'y a pas de majuscule oubliée sur GitHub !");
+                alert("Erreur sur le fichier : " + file + "\nVérifie que le nom est EXACT sur GitHub !");
             });
 
             document.querySelectorAll('li').forEach(s => s.classList.remove('active'));
